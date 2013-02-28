@@ -47,6 +47,15 @@ var Sky = function(options) {
     });
   }
 
+  var parseProgram = function(prog) {
+    return {
+      date: new Date(prog.s*1000),
+      title: prog.t,
+      description: prog.d,
+      duration: prog.m[1]/60
+    };
+  }
+
   var getChannelListingPart = function(channelID,date,part,fnCallback) {
     var httpParams = {
       host: 'tv.sky.com',
@@ -62,12 +71,7 @@ var Sky = function(options) {
         var parsed = JSON.parse(chunks);
         for (var i in parsed.listings[channelID]) {
           var prog = parsed.listings[channelID][i];
-          progs.push({
-            date: new Date(prog.s*1000),
-            title: prog.t,
-            description: prog.d,
-            duration: prog.m[1]/60
-          });
+          progs.push(parseProgram(prog));
         }
         fnCallback(progs);
       })
@@ -193,15 +197,25 @@ var Sky = function(options) {
     });
   }
 
-  this.whatsOn = function (channelId,date,fnCallback) {
-    this.getChannelListing(channelId,function(progs) {
-      for (var i in progs) {
-        if (progs[i].date > date) {
-          fnCallback(progs[Math.max(0,i-1)]);
-          break;
-        };
-      };
+  this.whatsOn = function (channelId,fnCallback) {
+    var httpParams = {
+      host: 'epgservices.sky.com',
+      port: 80,
+      path: '/5.1.1/api/2.0/channel/json/'+channelId+'/now/nn/4'
+    };
+    var req = http.request(httpParams,function(res) {
+      res.setEncoding('utf8');
+      var chunks = "";
+      res.on('data',function(chunk) { chunks = chunks+chunk; });
+      res.on('end',function() {
+        var parsed = JSON.parse(chunks);
+        fnCallback({
+          now: parseProgram(parsed.listings[channelId][0]),
+          next: parseProgram(parsed.listings[channelId][1])
+        });
+      });
     });
+    req.end();
   }
 
 };
@@ -214,8 +228,9 @@ var s = new Sky({
 });
 
 s.getMediaInfo(function(data) {
-  s.whatsOn(data.channelID, new Date(), function(data) {
-    console.log(data);
+  s.whatsOn(data.channelID, function(data) {
+    console.log(data.now.title);
+    console.log(data.now.description);
   });
 });
 
