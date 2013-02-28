@@ -3,7 +3,8 @@
 var XML = require('xml'),
     _ = require('underscore'),
     http = require('http'),
-    dgram = require('dgram');
+    dgram = require('dgram'),
+    xmlparser = require('xml2json');
 
 
 var Sky = function(options) {
@@ -36,7 +37,7 @@ var Sky = function(options) {
     var req = http.request(httpParams, function(res) {
         res.setEncoding('utf8');
         res.on('data',function(chunk) {
-          callback(chunk);
+          callback(JSON.parse(xmlparser.toJson(chunk))['s:Envelope']['s:Body']);
         });
     });
     req.write(body);
@@ -98,6 +99,52 @@ var Sky = function(options) {
     });
   };
 
+  this.changeChannelHexID = function (id) {
+    var xml = generateRequestXML([
+      {'u:SetAVTransportURI':[
+        {'_attr':{
+          'xmlns:u': 'urn:schemas-nds-com:service:SkyPlay:2'
+        }},
+        {
+          'InstanceID': 0
+        },
+        {
+          'CurrentURI': 'xsi://'+id
+        },
+        {
+          'CurrentURIMetaData': 'NOT_IMPLEMENTED'
+        }
+      ]}
+    ]);
+    request("SkyPlay:2#SetAVTransportURI",xml,'/SkyPlay2',function(response) {
+      console.log(response);
+    });
+  }
+
+  this.changeChannelID = function (id) {
+    return this.changeChannelHexID(id.toString(16));
+  }
+
+  this.getMediaInfo = function(fnCallback) {
+    var xml = generateRequestXML([
+      {'u:GetMediaInfo':[
+        {'_attr':{
+          'xmlns:u': 'urn:schemas-nds-com:service:SkyPlay:2'
+        }},
+        {
+          'InstanceID':0
+        }
+      ]}
+    ]);
+    request("SkyPlay:2#GetMediaInfo",xml,'/SkyPlay2',function(response) {
+      var currentURI = response['u:GetMediaInfoResponse']['CurrentURI'].replace(/^xsi:\/\//,'');
+      fnCallback({
+        channelHexID: currentURI,
+        channelID: parseInt(currentURI,16)
+      })
+    });
+  }
+
 };
 
 /* ==== */
@@ -107,4 +154,6 @@ var s = new Sky({
   port: 49153
 });
 
-s.play();
+s.getMediaInfo(function(data) {
+  console.log('CHANNEL INFO',data)
+});
