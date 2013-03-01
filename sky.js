@@ -185,14 +185,18 @@ var Sky = function(options) {
       dateStr = year +'-'+ (month>9?month:'0'+month) +'-'+ (date>9?date:'0'+date),
       progs = [];
 
-    getChannelListingPart(channelID,dateStr,0,function(progs0) {
-      getChannelListingPart(channelID,dateStr,1,function(progs1) {
-        getChannelListingPart(channelID,dateStr,2,function(progs2) {
-          getChannelListingPart(channelID,dateStr,3,function(progs3) {
-            progs = progs.concat(progs0,progs1,progs2,progs3);
-            fnCallback(progs);
-          });
-        });
+    var runCallback = _.after(4,function() {
+      progs = progs.sort(function(a,b) {
+        if (a.date.valueOf() == b.date.valueOf()) return 0;
+        return (a.date.valueOf() > b.date.valueOf()) ? 1 : -1;
+      });
+      fnCallback(progs);
+    });
+
+    _.times(4,function(i) {
+      getChannelListingPart(channelID,dateStr,i,function(progs_i) {
+        progs = progs.concat(progs_i);
+        runCallback();
       });
     });
   }
