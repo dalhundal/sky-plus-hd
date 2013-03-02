@@ -222,6 +222,73 @@ var Sky = function(options) {
     req.end();
   }
 
+  var subscriptionSID = null;
+
+  this.requestSubscription = function(host,port,fnCallback) {
+    var httpParams = {
+      host: options.host,
+      port: options.port,
+      path: '/SkyPlay2',
+      method: 'SUBSCRIBE',
+      headers: {
+        callback: "<http://"+host+":"+port+"/uuid:444D5276-3253-6B79-436F-0019fb7d7534/urn:nds-com:serviceId:SkyPlay2>",
+        nt: 'upnp:event'
+      }
+    };
+    var req = http.request(httpParams,function(res) {
+      res.setEncoding('utf8');
+      var chunks = "";
+      res.on('data',function(chunk) { chunks = chunks+chunk; });
+      res.on('end',function() {
+        fnCallback();
+      });
+      subscriptionSID = res.headers.sid || null;
+    });
+    req.end();
+  };
+
+  this.cancelSubscription = function(host,port,fnCallback) {
+    if (!subscriptionSID) {
+      console.log("No subscription to cancel");
+      return;
+    };
+    console.log("Cancelling subscription with SID:",subscriptionSID);
+    var httpParams = {
+      host: options.host,
+      port: options.port,
+      path: '/SkyPlay2',
+      method: 'UNSUBSCRIBE',
+      headers: {
+        SID: subscriptionSID
+      }
+    };
+    subscriptionSID == null;
+
+    var req = http.request(httpParams,function(res) {
+      res.setEncoding('utf8');
+      var chunks = "";
+      res.on('data',function(chunk) { chunks = chunks+chunk; });
+      res.on('end',function() {});
+    });
+    req.end();
+  };
+
+  this.monitor = function() {  
+    this.requestSubscription('192.168.1.150',56061,function() {
+      console.log("Subscribed with SID:",subscriptionSID);
+    });
+    //
+    var monitorServer = http.createServer(function(req,res) {
+      console.log("NOTIFICATION");
+      var chunks = "";
+      req.on('data',function(chunk) { chunks += chunk });
+      //req.on('end',function() { console.log(chunks); });
+      res.writeHead(200,{'Content-Type':'text/plain'});
+      res.end('OK');
+    }).listen(56061);
+
+  };
+
 };
 
 /* ==== */
@@ -238,3 +305,10 @@ s.getMediaInfo(function(data) {
   });
 });
 
+s.monitor();
+
+process.on('exit',function() {
+  s.cancelSubscription();
+}).on('SIGINT',function() {
+  process.exit();
+});
