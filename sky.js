@@ -169,11 +169,24 @@ var Sky = function(options) {
       ]}
     ]);
     request("SkyPlay:2#GetMediaInfo",xml,'/SkyPlay2',function(response) {
-      var currentURI = response['u:GetMediaInfoResponse']['CurrentURI'].replace(/^xsi:\/\//,'');
-      fnCallback({
-        channelHexID: currentURI,
-        channelID: parseInt(currentURI,16)
-      })
+      var currentURI = response['u:GetMediaInfoResponse']['CurrentURI'];
+      var info;
+      if (currentURI.match(/^xsi:\/\//)) {
+        var channelHexID = currentURI.replace(/^xsi:\/\//,'');
+        info = {
+          broadcast: true,
+          channelHexID: channelHexID,
+          channelID: parseInt(channelHexID,16)
+        };
+      } else if (currentURI.match(/^file:\/\/pvr\//)) {
+        var pvrHexID = currentURI.replace(/^file:\/\/pvr\//,'');
+        info = {
+          broadcast: false,
+          pvrHexID: pvrHexID,
+          pvrID: parseInt(pvrHexID,16)
+        };
+      }
+      fnCallback(info);
     });
   }
 
@@ -300,10 +313,14 @@ var s = new Sky({
 });
 
 s.getMediaInfo(function(data) {
-  s.whatsOn(data.channelID, function(data) {
-    console.log(data.now.title);
-    console.log(data.now.description);
-  });
+  if (data.broadcast) {
+    s.whatsOn(data.channelID, function(data) {
+      console.log(data.now.title);
+      console.log(data.now.description);
+    });
+  } else {
+    console.log("Watching PVR id",data.pvrID);
+  };
 });
 
 s.monitor();
