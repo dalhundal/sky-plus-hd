@@ -273,9 +273,10 @@ var Sky = function(options) {
     req.end();
   };
 
-  this.monitor = function() {  
-    this.requestSubscription('192.168.1.150',56061,function() {
-      console.log("Subscribed with SID:",subscriptionSID);
+  this.monitor = function() {
+    var monitorPort = 50000 + Math.round(Math.random()*15000);
+    this.requestSubscription('192.168.1.150',monitorPort,function() {
+      console.log("Subscribed with SID:",subscriptionSID,"on port:",monitorPort);
     });
     //
     var monitorServer = http.createServer(function(req,res) {
@@ -285,7 +286,7 @@ var Sky = function(options) {
       //req.on('end',function() { console.log(chunks); });
       res.writeHead(200,{'Content-Type':'text/plain'});
       res.end('OK');
-    }).listen(56061);
+    }).listen(monitorPort);
 
   };
 
