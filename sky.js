@@ -79,6 +79,42 @@ var Sky = function(options) {
     req.end();
   }
 
+  var channelsData;
+  var loadChannelList = function () {
+    if (channelsData) return channelsData;
+    var filename='./channels.json';
+    var channelsDataRaw = require(filename);
+    channelsData = [];
+    _.each(channelsDataRaw.init.channels,function(channelDataRaw) {
+      channelsData.push({
+        name: channelDataRaw.t,
+        channel: channelDataRaw.c[1],
+        channelID: channelDataRaw.c[0],
+        channelHexID: channelDataRaw.c[0].toString(16),
+        isHD: channelDataRaw.c[3]?true:false
+      });
+    });
+    return channelsData;
+  };
+
+  var getChannel = function(number) {
+    return _.find(loadChannelList(),function(c) {
+      return c.channel == number;
+    });
+  };
+
+  var getChannelByID = function(ID) {
+    return _.find(loadChannelList(),function(c) {
+      return c.channelID = ID;
+    });
+  };
+
+  var getChannelByHexID = function(hexID) {
+    return _.find(loadChannelList(),function(c) {
+      return c.channelHexID = hexID;
+    });
+  };
+
   /* ==== */
 
   this.detect = function(fnCallback) {
@@ -157,6 +193,11 @@ var Sky = function(options) {
     return this.changeChannelHexID(id.toString(16));
   }
 
+  this.changeChannel = function(num) {
+    var c = getChannel(num);
+    return this.changeChannelHexID(c.channelHexID);
+  }
+
   this.getMediaInfo = function(fnCallback) {
     var xml = generateRequestXML([
       {'u:GetMediaInfo':[
@@ -175,8 +216,7 @@ var Sky = function(options) {
         var channelHexID = currentURI.replace(/^xsi:\/\//,'');
         info = {
           broadcast: true,
-          channelHexID: channelHexID,
-          channelID: parseInt(channelHexID,16)
+          channel: getChannelByHexID(channelHexID)
         };
       } else if (currentURI.match(/^file:\/\/pvr\//)) {
         var pvrHexID = currentURI.replace(/^file:\/\/pvr\//,'');
@@ -300,7 +340,6 @@ var Sky = function(options) {
       res.writeHead(200,{'Content-Type':'text/plain'});
       res.end('OK');
     }).listen(monitorPort);
-
   };
 
 };
@@ -313,10 +352,13 @@ var s = new Sky({
 });
 
 s.getMediaInfo(function(data) {
+  //console.log(data);
+  return;
   if (data.broadcast) {
-    s.whatsOn(data.channelID, function(data) {
-      console.log(data.now.title);
-      console.log(data.now.description);
+    s.whatsOn(data.channel.channelID, function(whatsOnData) {
+      console.log(data.channel.name);
+      console.log(whatsOnData.now.title);
+      console.log(whatsOnData.now.description);
     });
   } else {
     console.log("Watching PVR id",data.pvrID);
