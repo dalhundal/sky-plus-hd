@@ -286,13 +286,15 @@ var Sky = function(options) {
   var subscriptionSID = null;
 
   this.requestSubscription = function(host,port,fnCallback) {
+    var subscriptionID = "/sky/monitor/NOTIFICATION/"+Math.round(Math.random()*1000000000);
     var httpParams = {
       host: options.host,
       port: options.port,
       path: '/SkyPlay2',
       method: 'SUBSCRIBE',
       headers: {
-        callback: "<http://"+host+":"+port+"/uuid:444D5276-3253-6B79-436F-0019fb7d7534/urn:nds-com:serviceId:SkyPlay2>",
+        //callback: "<http://"+host+":"+port+"/uuid:444D5276-3253-6B79-436F-0019fb7d7534/urn:nds-com:serviceId:SkyPlay2>",
+        callback: "<http://"+host+":"+port+subscriptionID+">",
         nt: 'upnp:event'
       }
     };
@@ -306,6 +308,7 @@ var Sky = function(options) {
       subscriptionSID = res.headers.sid || null;
     });
     req.end();
+    return subscriptionID;
   };
 
   this.cancelSubscription = function(host,port,fnCallback) {
@@ -336,12 +339,17 @@ var Sky = function(options) {
 
   this.monitor = function() {
     var that = this;
-    var monitorPort = 50000 + Math.round(Math.random()*15000);
-    this.requestSubscription('192.168.1.150',monitorPort,function() {
-      console.log("Subscribed with SID:",subscriptionSID,"on port:",monitorPort);
+    var monitorPort = 55555;
+    var subscriptionID = this.requestSubscription('192.168.1.150',monitorPort,function() {
+      console.log("Subscribed with SID:",subscriptionSID,"on port:",monitorPort,". SubscriptionID = ",subscriptionID);
     });
     //
     var monitorServer = http.createServer(function(req,res) {
+      if (req.url != subscriptionID) {
+         res.writeHead(404,{'Content-Type':'text/plain'});
+         res.end();
+         return;
+      };
       var chunks = "";
       req.on('data',function(chunk) { chunks += chunk });
       req.on('end',function() {
