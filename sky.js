@@ -5,6 +5,10 @@ var XML = require('xml'),
     http = require('http'),
     dgram = require('dgram'),
     xmlparser = require('xml2json');
+    Entities = require('html-entities').AllHtmlEntities,
+    entities = new Entities(),
+    util = require('util'),
+    EventEmitter = require('events').EventEmitter;
 
 
 var Sky = function(options) {
@@ -90,7 +94,7 @@ var Sky = function(options) {
         name: channelDataRaw.t,
         channel: channelDataRaw.c[1],
         channelID: channelDataRaw.c[0],
-        channelHexID: channelDataRaw.c[0].toString(16),
+        channelHexID: channelDataRaw.c[0].toString(16).toUpperCase(),
         isHD: channelDataRaw.c[3]?true:false
       });
     });
@@ -105,15 +109,34 @@ var Sky = function(options) {
 
   var getChannelByID = function(ID) {
     return _.find(loadChannelList(),function(c) {
-      return c.channelID = ID;
+      return c.channelID == ID;
     });
   };
 
   var getChannelByHexID = function(hexID) {
     return _.find(loadChannelList(),function(c) {
-      return c.channelHexID = hexID;
+      return c.channelHexID == hexID.toUpperCase();
     });
   };
+
+  var getURIInformation = function(uri) {
+    var info;
+    if (uri.match(/^xsi:\/\//)) {
+      var channelHexID = uri.replace(/^xsi:\/\//,'');
+      info = {
+        broadcast: true,
+        channel: getChannelByHexID(channelHexID)
+      }
+    } else if (uri.match(/^file:\/\/pvr\//)) {
+      var pvrHexID = currentURI.replace(/^file:\/\/pvr\//,'');
+      info = {
+        broadcast: false,
+        pvrHexID: pvrHexID,
+        pvrID: parseInt(pvrHexID,16)
+      };
+    }
+    return info;
+  }
 
   /* ==== */
 
@@ -211,22 +234,7 @@ var Sky = function(options) {
     ]);
     request("SkyPlay:2#GetMediaInfo",xml,'/SkyPlay2',function(response) {
       var currentURI = response['u:GetMediaInfoResponse']['CurrentURI'];
-      var info;
-      if (currentURI.match(/^xsi:\/\//)) {
-        var channelHexID = currentURI.replace(/^xsi:\/\//,'');
-        info = {
-          broadcast: true,
-          channel: getChannelByHexID(channelHexID)
-        };
-      } else if (currentURI.match(/^file:\/\/pvr\//)) {
-        var pvrHexID = currentURI.replace(/^file:\/\/pvr\//,'');
-        info = {
-          broadcast: false,
-          pvrHexID: pvrHexID,
-          pvrID: parseInt(pvrHexID,16)
-        };
-      }
-      fnCallback(info);
+      fnCallback(getURIInformation(currentURI));
     });
   }
 
@@ -327,16 +335,30 @@ var Sky = function(options) {
   };
 
   this.monitor = function() {
+    var that = this;
     var monitorPort = 50000 + Math.round(Math.random()*15000);
     this.requestSubscription('192.168.1.150',monitorPort,function() {
       console.log("Subscribed with SID:",subscriptionSID,"on port:",monitorPort);
     });
     //
     var monitorServer = http.createServer(function(req,res) {
-      console.log("NOTIFICATION");
       var chunks = "";
       req.on('data',function(chunk) { chunks += chunk });
-      //req.on('end',function() { console.log(chunks); });
+      req.on('end',function() {
+        var jsonData = JSON.parse(xmlparser.toJson(chunks,{sanitize:false}));
+        var notificationRaw = jsonData['e:propertyset']['e:property']['LastChange'];
+        notificationRaw = notificationRaw.replace(/([^=])"([a-zA-Z])/g,'$1" $2'); // WORKAROUND FOR ILL FORMED XML, ATTRIBUTES FOR A NODE HAVE A SPACE MISSING BETWEEN THEM, THIS RESTORES IT
+        var notificationXML = entities.decode(entities.decode(notificationRaw));
+        var notificationJSON = JSON.parse(xmlparser.toJson(notificationXML)).Event.InstanceID;
+        //
+        var currentURI = notificationJSON.CurrentTrackURI.val;
+        var uriInformation = getURIInformation(currentURI);
+        that.whatsOn(uriInformation.channel.channelID,function(whatsOn) {
+          var ev = uriInformation;
+          ev.program = whatsOn;
+          that.emit('change',ev);
+        })
+      });
       res.writeHead(200,{'Content-Type':'text/plain'});
       res.end('OK');
     }).listen(monitorPort);
@@ -344,28 +366,32 @@ var Sky = function(options) {
 
 };
 
+util.inherits(Sky,EventEmitter);
 /* ==== */
+
 
 var s = new Sky({
   host: '192.168.1.193',
   port: 49153
 });
 
-s.getMediaInfo(function(data) {
-  //console.log(data);
-  return;
-  if (data.broadcast) {
-    s.whatsOn(data.channel.channelID, function(whatsOnData) {
-      console.log(data.channel.name);
-      console.log(whatsOnData.now.title);
-      console.log(whatsOnData.now.description);
-    });
+s.on('change',function(ev) {
+  console.log();
+  console.log(new Date());
+  if (ev.broadcast) {
+    console.log("Current Channel: "+ev.channel.channel+", "+ev.channel.name);
+    console.log("Program: "+ev.program.now.title);
+    console.log("Synopsis:"+ev.program.now.description);
   } else {
-    console.log("Watching PVR id",data.pvrID);
-  };
+    console.log("Not watching a live channel");
+  }
+  console.log("-----");
+  console.log();
 });
 
 s.monitor();
+
+/* ===== */
 
 process.on('exit',function() {
   s.cancelSubscription();
