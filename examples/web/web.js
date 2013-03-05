@@ -1,11 +1,17 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 
-var app = require('express')(),
-   server = require('http').createServer(app),
-   io = require('socket.io').listen(server);
+var options = {
+   skyBox: 'sky', // IP or Hostname of the Sky+ HD box
+   httpPort: 55580 // Port to run web server on
+}
 
-var express = require('express');
-var Sky = require('../..').Sky;
+/* ===== */
+
+var app = require('express')()
+   ,server = require('http').createServer(app)
+   ,io = require('socket.io').listen(server)
+   ,express = require('express')
+   ,Sky = require('../..');
 
 app.use(express.static('static'));
 app.get('/',function(req,res) { res.sendfile('static/index.html'); });
@@ -15,21 +21,16 @@ io.sockets.on('connection',function(socket) {
       socket.emit('changes',changes);
    };
    socket.on('changeChannel',function(channel) {
-      console.log("change channel to ",channel);
       sky.changeChannel(channel);
    });
 });
 
 /* ==== */
 
-var sky = new Sky({
-   host: '192.168.1.193',
-   port: 49153
-});
+var sky = new Sky({ host: options.skyBox });
 
 var changes = [];
 sky.on('change',function(data) {
-   console.log("RECEIVED CHANGE");
    var saveData = {
       ts: new Date().valueOf(),
       data: data
@@ -39,6 +40,11 @@ sky.on('change',function(data) {
 });
 
 sky.monitor();
-server.listen(55580);
+server.listen(options.httpPort);
 
+process.on('exit',function() {
+  sky.cancelSubscription();
+}).on('SIGINT',function() {
+  process.exit();
+});
 /* ===== */
