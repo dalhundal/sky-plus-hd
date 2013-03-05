@@ -26,11 +26,11 @@ var Sky = function(options) {
     return '<?xml version="1.0" encoding="utf-8"?>'+XML(json);
   }
 
-  var request = function (soapAction,body,path,callback) {
+  var soapRequest = function (soapAction,body,path,fnCallback) {
     var httpParams = {
       hostname: options.host,
       port: options.port,
-      path: options.overridePath || path,
+      path: path,
       method: 'POST',
       headers: {
         'USER-AGENT': 'SKY_skyplus',
@@ -41,7 +41,7 @@ var Sky = function(options) {
     var req = http.request(httpParams, function(res) {
         res.setEncoding('utf8');
         res.on('data',function(chunk) {
-          callback(JSON.parse(xmlparser.toJson(chunk))['s:Envelope']['s:Body']);
+          fnCallback(JSON.parse(xmlparser.toJson(chunk))['s:Envelope']['s:Body']);
         });
     });
     req.write(body);
@@ -53,14 +53,15 @@ var Sky = function(options) {
 
   var parseProgram = function(prog) {
     return {
-      date: new Date(prog.s*1000),
+      start: new Date(prog.s*1000),
+      end: new Date((prog.s+prog.m[1]-1)*1000),
       title: prog.t,
       description: prog.d,
       duration: prog.m[1]/60
     };
   }
 
-  var getChannelListingPart = function(channelID,date,part,fnCallback) {
+  var fetchChannelListingPart = function(channelID,date,part,fnCallback) {
     var httpParams = {
       host: 'tv.sky.com',
       port: 80,
@@ -169,7 +170,7 @@ var Sky = function(options) {
         }
       ]}
     ]);
-    request("SkyPlay:2#Play",xml,'/SkyPlay2',function(response) {
+    soapRequest("SkyPlay:2#Play",xml,'/SkyPlay2',function(response) {
       console.log(response);
     });
   };
@@ -185,7 +186,7 @@ var Sky = function(options) {
         }
       ]}
     ]);
-    request("SkyPlay:2#Pause",xml,'/SkyPlay2',function(response) {
+    soapRequest("SkyPlay:2#Pause",xml,'/SkyPlay2',function(response) {
       console.log(response);
     });
   };
@@ -207,7 +208,7 @@ var Sky = function(options) {
         }
       ]}
     ]);
-    request("SkyPlay:2#SetAVTransportURI",xml,'/SkyPlay2',function(response) {
+    soapRequest("SkyPlay:2#SetAVTransportURI",xml,'/SkyPlay2',function(response) {
       console.log(response);
     });
   }
@@ -232,7 +233,7 @@ var Sky = function(options) {
         }
       ]}
     ]);
-    request("SkyPlay:2#GetMediaInfo",xml,'/SkyPlay2',function(response) {
+    soapRequest("SkyPlay:2#GetMediaInfo",xml,'/SkyPlay2',function(response) {
       var currentURI = response['u:GetMediaInfoResponse']['CurrentURI'];
       fnCallback(getURIInformation(currentURI));
     });
@@ -248,14 +249,14 @@ var Sky = function(options) {
 
     var runCallback = _.after(4,function() {
       progs = progs.sort(function(a,b) {
-        if (a.date.valueOf() == b.date.valueOf()) return 0;
-        return (a.date.valueOf() > b.date.valueOf()) ? 1 : -1;
+        if (a.start.valueOf() == b.start.valueOf()) return 0;
+        return (a.start.valueOf() > b.start.valueOf()) ? 1 : -1;
       });
       fnCallback(progs);
     });
 
     _.times(4,function(i) {
-      getChannelListingPart(channelID,dateStr,i,function(progs_i) {
+      fetchChannelListingPart(channelID,dateStr,i,function(progs_i) {
         progs = progs.concat(progs_i);
         runCallback();
       });
@@ -284,7 +285,6 @@ var Sky = function(options) {
   }
 
   var subscriptionSID = null;
-
   this.requestSubscription = function(host,port,fnCallback) {
     var subscriptionID = "/sky/monitor/NOTIFICATION/"+(new Date().valueOf());
     var httpParams = {
@@ -339,8 +339,9 @@ var Sky = function(options) {
   var lastURI = null;
   this.monitor = function() {
     var that = this;
+    var monitorHost = '192.168.1.150';
     var monitorPort = 55555;
-    var subscriptionID = this.requestSubscription('192.168.1.150',monitorPort,function() {
+    var subscriptionID = this.requestSubscription(monitorHost,monitorPort,function() {
       console.log("Subscribed with SID:",subscriptionSID,"on port:",monitorPort,". SubscriptionID = ",subscriptionID);
     });
     //
@@ -396,7 +397,9 @@ s.on('change',function(ev) {
   if (ev.broadcast) {
     console.log("Current Channel: "+ev.channel.channel+", "+ev.channel.name);
     console.log("Program: "+ev.program.now.title);
-    console.log("Synopsis:"+ev.program.now.description);
+    console.log("Synopsis: "+ev.program.now.description);
+    console.log("Started: "+ev.program.now.start);
+    console.log("Ends: "+ev.program.now.end);
   } else {
     console.log("Not watching a live channel");
   }
