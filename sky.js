@@ -286,14 +286,13 @@ var Sky = function(options) {
   var subscriptionSID = null;
 
   this.requestSubscription = function(host,port,fnCallback) {
-    var subscriptionID = "/sky/monitor/NOTIFICATION/"+Math.round(Math.random()*1000000000);
+    var subscriptionID = "/sky/monitor/NOTIFICATION/"+(new Date().valueOf());
     var httpParams = {
       host: options.host,
       port: options.port,
       path: '/SkyPlay2',
       method: 'SUBSCRIBE',
       headers: {
-        //callback: "<http://"+host+":"+port+"/uuid:444D5276-3253-6B79-436F-0019fb7d7534/urn:nds-com:serviceId:SkyPlay2>",
         callback: "<http://"+host+":"+port+subscriptionID+">",
         nt: 'upnp:event'
       }
@@ -337,6 +336,7 @@ var Sky = function(options) {
     req.end();
   };
 
+  var lastURI = null;
   this.monitor = function() {
     var that = this;
     var monitorPort = 55555;
@@ -359,13 +359,20 @@ var Sky = function(options) {
         var notificationXML = entities.decode(entities.decode(notificationRaw));
         var notificationJSON = JSON.parse(xmlparser.toJson(notificationXML)).Event.InstanceID;
         //
+        if (!notificationJSON.CurrentTrackURI) {
+          console.log(notificationJSON);
+          return;
+        };
         var currentURI = notificationJSON.CurrentTrackURI.val;
-        var uriInformation = getURIInformation(currentURI);
-        that.whatsOn(uriInformation.channel.channelID,function(whatsOn) {
-          var ev = uriInformation;
-          ev.program = whatsOn;
-          that.emit('change',ev);
-        })
+        if (currentURI != lastURI) {
+          lastURI = currentURI;
+          var uriInformation = getURIInformation(currentURI);
+          that.whatsOn(uriInformation.channel.channelID,function(whatsOn) {
+            var ev = uriInformation;
+            ev.program = whatsOn;
+            that.emit('change',ev);
+          });
+        };
       });
       res.writeHead(200,{'Content-Type':'text/plain'});
       res.end('OK');
