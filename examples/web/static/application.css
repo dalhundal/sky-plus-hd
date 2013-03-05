@@ -1,0 +1,10 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+
+body {
+   background-color: #FAFAFA;
+   font-family: 'Droid Sans', sans-serif;
+}
+
+table {
+   width: 100%;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "sky-plus-hd.js",
+  "version": "0.0.1",
+  "description": "Node.js module for controlling and monitoring Sky+ HD set top boxes",
+  "main": "lib/sky-plus-hd.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dalhundal/sky-plus-hd.js.git"
+  },
+  "keywords": [
+    "SkyHD",
+    "SkyPlus",
+    "Sky",
+    "SkyPlusHD"
+  ],
+  "author": "Dal Hundal",
+  "license": "BSD"
+}
