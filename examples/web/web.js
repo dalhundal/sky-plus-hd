@@ -5,7 +5,7 @@ var app = require('express')(),
    io = require('socket.io').listen(server);
 
 var express = require('express');
-var Sky = require('../../lib/sky-plus-hd.js').Sky;
+var Sky = require('../..').Sky;
 
 app.use(express.static('static'));
 app.get('/',function(req,res) { res.sendfile('static/index.html'); });
