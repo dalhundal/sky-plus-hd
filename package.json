@@ -1,6 +1,6 @@
 {
   "name": "sky-plus-hd",
-  "version": "0.0.1",
+  "version": "0.0.1a",
   "description": "Node.js module for controlling and monitoring Sky+ HD set top boxes",
   "main": "lib/sky-plus-hd.js",
   "scripts": {
