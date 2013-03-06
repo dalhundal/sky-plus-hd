@@ -2,8 +2,7 @@
 
 var Sky = require('../..');
 
-
-var sky = new Sky({ host: 'sky' });
+var sky = new Sky();
 
 sky.on('change',function(change) {
    console.log();
@@ -11,7 +10,9 @@ sky.on('change',function(change) {
    console.log();
 });
 
-sky.monitor();
+sky.on('ready',function() {
+   sky.monitor();
+});
 
 process.on('exit',function() {
   sky.cancelSubscription();

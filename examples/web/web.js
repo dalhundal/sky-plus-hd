@@ -1,12 +1,5 @@
 #!/usr/bin/env node
 
-var options = {
-   skyBox: 'sky', // IP or Hostname of the Sky+ HD box
-   httpPort: 55580 // Port to run web server on
-}
-
-/* ===== */
-
 var app = require('express')()
    ,server = require('http').createServer(app)
    ,io = require('socket.io').listen(server)
@@ -27,7 +20,7 @@ io.sockets.on('connection',function(socket) {
 
 /* ==== */
 
-var sky = new Sky({ host: options.skyBox });
+var sky = new Sky();
 
 var changes = [];
 sky.on('change',function(data) {
@@ -39,12 +32,13 @@ sky.on('change',function(data) {
    io.sockets.emit('change',saveData);
 });
 
-sky.monitor();
-server.listen(options.httpPort);
+sky.on('ready',function() {
+   sky.monitor();
+   server.listen(55580);
+});
 
 process.on('exit',function() {
   sky.cancelSubscription();
 }).on('SIGINT',function() {
   process.exit();
 });
-/* ===== */
