@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Sky-plus-hd : Node.js module for controlling and monitoring Sky+ HD set top boxes" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Sky-plus-hd</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/dalhundal/sky-plus-hd">View on GitHub</a>
+
+          <h1 id="project_title">Sky-plus-hd</h1>
+          <h2 id="project_tagline">Node.js module for controlling and monitoring Sky+ HD set top boxes</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/dalhundal/sky-plus-hd/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/dalhundal/sky-plus-hd/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>sky-plus-hd</h1>
+
+<p>A Node.js module for controlling and monitoring Sky+ HD set top boxes.</p>
+
+<h1>Install</h1>
+
+<pre><code>npm install sky-plus-hd
+</code></pre>
+
+<h1>Usage</h1>
+
+<p>In a nutshell:</p>
+
+<h2>Monitoring for channel changes</h2>
+
+<pre><code>var SkyPlusHD = require('sky-plus-hd');
+
+var sky = new SkyPlusHD({ host: 'IP-ADDRESS-OF-YOUR-SKY+HD-BOX' });
+
+sky.on('change',function(info) {
+    console.log(info.channel.name); // Outputs current channel name
+    console.log(info.channel.channel); // Outputs current channel number
+    console.log(info.program.now.title); // Outputs current program title
+    console.log(info.program.now.description); // Outputs current program synopsis
+});
+
+sky.monitor();
+</code></pre>
+
+<h2>Controlling the Sky+ HD box</h2>
+
+<pre><code>var SkyPlusHD = require('sky-plus-hd');
+
+var sky = new SkyPlusHD({ host: 'IP-ADDRESS-OF-YOUR-SKY+HD-BOX' });
+
+sky.changeChannel(101); // Changes to BBC1
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Sky-plus-hd maintained by <a href="https://github.com/dalhundal">dalhundal</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
