@@ -1,8 +1,14 @@
 {
   "name": "sky-plus-hd",
-  "version": "0.0.1",
+  "version": "0.0.1-1",
   "description": "Node.js module for controlling and monitoring Sky+ HD set top boxes",
   "main": "lib/sky-plus-hd.js",
+  "dependencies": {
+    "underscore": "1.4.x",
+    "html-entities": "1.0.x",
+    "xml": "0.0.x",
+    "xml2json": "0.3.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
