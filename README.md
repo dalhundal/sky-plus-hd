@@ -1,7 +1,7 @@
 sky-plus-hd
 ===
 
-A Node.js module for controlling and monitoring Sky+ HD set top boxes.
+A Node.js module for controlling and monitoring Sky+ HD set top boxes. It will auto-detect your Sky+ HD box on your local network.
 
 Install
 ===
@@ -10,14 +10,12 @@ Install
 Usage
 ===
 
-In a nutshell:
-
 Monitoring for channel changes
 ---
 
     var SkyPlusHD = require('sky-plus-hd');
     
-    var sky = new SkyPlusHD({ host: 'IP-ADDRESS-OF-YOUR-SKY+HD-BOX' });
+    var sky = new SkyPlusHD();
     
     sky.on('change',function(info) {
         console.log(info.channel.name); // Outputs current channel name
@@ -26,7 +24,9 @@ Monitoring for channel changes
         console.log(info.program.now.description); // Outputs current program synopsis
     });
     
-    sky.monitor();
+    sky.on('ready',function() {
+       sky.monitor();
+    });
     
     
 Controlling the Sky+ HD box
@@ -34,6 +34,8 @@ Controlling the Sky+ HD box
 
     var SkyPlusHD = require('sky-plus-hd');
     
-    var sky = new SkyPlusHD({ host: 'IP-ADDRESS-OF-YOUR-SKY+HD-BOX' });
+    var sky = new SkyPlusHD();
     
-    sky.changeChannel(101); // Changes to BBC1
+    sky.on('ready',function() {
+       sky.changeChannel(101); // Changes to BBC1
+    });
