@@ -17,7 +17,7 @@ Monitoring for channel changes
 
     var SkyPlusHD = require('sky-plus-hd');
     
-    var sky = new SkyPlusHD({ host: '{IP-ADDRESS-OF-YOUR-SKY+HD-BOX' });
+    var sky = new SkyPlusHD({ host: 'IP-ADDRESS-OF-YOUR-SKY+HD-BOX' });
     
     sky.on('change',function(info) {
         console.log(info.channel.name); // Outputs current channel name
@@ -34,6 +34,6 @@ Controlling the Sky+ HD box
 
     var SkyPlusHD = require('sky-plus-hd');
     
-    var sky = new SkyPlusHD({ host: '{IP-ADDRESS-OF-YOUR-SKY+HD-BOX' });
+    var sky = new SkyPlusHD({ host: 'IP-ADDRESS-OF-YOUR-SKY+HD-BOX' });
     
     sky.changeChannel(101); // Changes to BBC1
