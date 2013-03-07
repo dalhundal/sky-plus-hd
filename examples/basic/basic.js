@@ -5,9 +5,9 @@ var Sky = require('../..');
 var sky = new Sky();
 
 sky.on('change',function(change) {
-   console.log();
-   console.log(change);
-   console.log();
+   //console.log();
+   //console.log(change);
+   //console.log();
 });
 
 sky.on('ready',function() {

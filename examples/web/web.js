@@ -2,7 +2,7 @@
 
 var app = require('express')()
    ,server = require('http').createServer(app)
-   ,io = require('socket.io').listen(server)
+   ,io = require('socket.io').listen(server,{'log level':0})
    ,express = require('express')
    ,Sky = require('../..');
 
