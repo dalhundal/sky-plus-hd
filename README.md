@@ -3,6 +3,8 @@ sky-plus-hd
 
 A Node.js module for controlling and monitoring Sky+ HD set top boxes. It will auto-detect your Sky+ HD box on your local network.
 
+This module is in development, and is changing almost daily. Please direct any comments or questions to [@ringspun][1].
+
 Install
 ===
     npm install sky-plus-hd
@@ -39,3 +41,6 @@ Controlling the Sky+ HD box
     sky.on('ready',function() {
        sky.changeChannel(101); // Changes to BBC1
     });
+
+
+[1]: http://twitter.com/ringspun
