@@ -15,7 +15,7 @@ sky.on('ready',function() {
 });
 
 process.on('exit',function() {
-  sky.cancelSubscription();
+  sky.close();
 }).on('SIGINT',function() {
   process.exit();
 });
