@@ -46,6 +46,7 @@ var createChangeHTML = function (change) {
       makeEl('td',{},change.data.channel.name),
       makeEl('td',{},change.data.program.now.title),
       makeEl('td',{},makeEl('a',{href:change.data.program.now.url},change.data.program.now.url)),
+      makeEl('td',{},(change.data.program.now.details.season)?'Season '+change.data.program.now.details.season+', Episode '+change.data.program.now.details.episode:''),
       makeEl('td',{},(change.data.program.now.image) ? makeEl('img',{src:change.data.program.now.image}) : '')
    ]);
    return el;
