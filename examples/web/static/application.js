@@ -44,7 +44,9 @@ var createChangeHTML = function (change) {
       makeEl('td',{},""+new Date(change.ts).toString()),
       makeEl('td',{},""+change.data.channel.channel),
       makeEl('td',{},change.data.channel.name),
-      makeEl('td',{},change.data.program.now.title)
+      makeEl('td',{},change.data.program.now.title),
+      makeEl('td',{},makeEl('a',{href:change.data.program.now.url},change.data.program.now.url)),
+      makeEl('td',{},(change.data.program.now.image) ? makeEl('img',{src:change.data.program.now.image}) : '')
    ]);
    return el;
 }
