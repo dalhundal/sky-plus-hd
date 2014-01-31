@@ -14,11 +14,13 @@
     "underscore.string": "~2.3.3",
     "xml2js": "~0.4.1",
     "node-ssdp": "~0.2.0",
-    "request": "~2.33.0"
+    "request": "~2.33.0",
+    "celeri": "~0.3.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node lib/sky-plus-hd.js"
+    "start": "node tools/monitor/sky-plus-hd-monitor.js",
+    "cli": "node tools/cli/sky-plus-hd-cli.js"
   },
   "repository": {
     "type": "git",
