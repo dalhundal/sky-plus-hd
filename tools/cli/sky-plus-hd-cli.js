@@ -24,6 +24,53 @@ skyFinder.then(function(skyBox) {
       });
    });
 
+   celeri.option({
+      command: 'pause',
+      description: "Pauses the currently playing programme",
+   },function() {
+      var spinner = celeri.loading("Pausing");
+      skyBox.pause().then(function() {
+         spinner.done();
+      }).fail(function() {
+         spinner.done(true);
+      });
+      skyBox.pause()
+   });
+
+   celeri.option({
+      command: 'channelinfo :channel',
+      description: "Show info for the specified channel"
+   },function(data) {
+      var spinner = celeri.loading("Getting channel info for "+data.channel);
+      skyBox.findChannel({number:+data.channel}).then(function(channel) {
+         spinner.done();
+         var table = [channel];
+         table.push({number:'======',name:'====',id:'==',idHex:'======'},{number:'NUMBER',name:'NAME',id:'ID',idHex:'ID HEX'});
+         celeri.drawTable(table,{
+            columns: ['number','name','id','idHex']
+         });
+      }).fail(function(err){
+         spinner.done(true);
+      });
+   });
+
+   celeri.option({
+      command: 'channels',
+      description: "Show info for all channels"
+   },function(data) {
+      var spinner = celeri.loading("Getting channels list");
+      skyBox.getChannelList().then(function(channelList) {
+         channelList.reverse();
+         
+         spinner.done();
+         celeri.drawTable(channelList,{
+            columns: ['number','name','id','idHex']
+         });
+      }).fail(function(err) {
+         spinner.done(true);
+      })
+   })
+
    celeri.parse(process.argv);
 
    /*
