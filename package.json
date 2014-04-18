@@ -4,7 +4,6 @@
   "description": "Node.js module for controlling and monitoring Sky+ HD set top boxes",
   "main": "lib/sky-plus-hd.js",
   "dependencies": {
-    "ssdp": "0.0.1",
     "ip": "~0.2.0",
     "pretty-data": "~0.40.0",
     "xml": "0.0.12",
