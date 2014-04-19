@@ -3,7 +3,6 @@ sky-plus-hd
 
 Node.js module for controlling and monitoring Sky+ HD set top boxes
 
+**Sorry for lack of documentation. Work in progress!**
 
-**This might be broken. Take a look at the [master-jan2014](https://github.com/dalhundal/sky-plus-hd/tree/master-jan2014) branch.**
-
-**Sorry for lack of documentation. Lack of time!**
+**This works for me as of April 2014, I presume I have the latest EPG software - haven't checked.**
