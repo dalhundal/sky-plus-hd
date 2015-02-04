@@ -12,9 +12,9 @@
     "portfinder": "~0.2.1",
     "underscore.string": "~2.3.3",
     "xml2js": "~0.4.1",
-    "node-ssdp": "~0.2.0",
     "request": "~2.33.0",
-    "celeri": "~0.3.3"
+    "celeri": "~0.3.3",
+    "node-ssdp": "^2.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
