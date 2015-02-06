@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="scpd.css"?>
+<scpd xmlns="urn:schemas-upnp-org:service-1-0">
+    <specVersion>
+        <major>1</major>
+        <minor>0</minor>
+    </specVersion>
+    <actionList>
+        <action>
+        <name>ListPresets</name>
+            <argumentList>
+                <argument>
+                    <name>InstanceID</name>
+                    <direction>in</direction>
+                    <relatedStateVariable>A_ARG_TYPE_InstanceID</relatedStateVariable>
+                </argument>
+                <argument>
+                    <name>CurrentPresetNameList</name>
+                    <direction>out</direction>
+                    <relatedStateVariable>PresetNameList</relatedStateVariable>
+                </argument>
+            </argumentList>
+        </action>
+        <action>
+        <name>SelectPreset</name>
+            <argumentList>
+                <argument>
+                    <name>InstanceID</name>
+                    <direction>in</direction>
+                    <relatedStateVariable>A_ARG_TYPE_InstanceID</relatedStateVariable>
+                </argument>
+                <argument>
+                    <name>PresetName</name>
+                    <direction>in</direction>
+                    <relatedStateVariable>A_ARG_TYPE_PresetName</relatedStateVariable>
+                </argument>
+            </argumentList>
+        </action>
+    </actionList>
+    <serviceStateTable>
+        <stateVariable sendEvents="no">
+            <name>PresetNameList</name>
+            <dataType>string</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="yes">
+            <name>LastChange</name>
+            <dataType>string</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>Brightness</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>Contrast</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>Sharpness</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>RedVideoGain</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>GreenVideoGain</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>BlueVideoGain</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>RedVideoBlackLevel</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>GreenVideoBlackLevel</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>BlueVideoBlackLevel</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>ColorTemperature</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>HorizontalKeystone</name>
+            <dataType>i2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>VerticalKeystone</name>
+            <dataType>i2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>Mute</name>
+            <dataType>boolean</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>Volume</name>
+            <dataType>ui2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>VolumeDB</name>
+            <dataType>i2</dataType>
+            <allowedValueRange>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>1</step>
+            </allowedValueRange>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>Loudness</name>
+            <dataType>boolean</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>A_ARG_TYPE_Channel</name>
+            <dataType>string</dataType>
+            <allowedValueList>
+                <allowedValue>Master</allowedValue>
+                <allowedValue>LF</allowedValue>
+                <allowedValue>RF</allowedValue>
+                <allowedValue>CF</allowedValue>
+                <allowedValue>LFE</allowedValue>
+                <allowedValue>LS</allowedValue>
+                <allowedValue>RS</allowedValue>
+                <allowedValue>LFC</allowedValue>
+                <allowedValue>RFC</allowedValue>
+                <allowedValue>SD</allowedValue>
+                <allowedValue>SL</allowedValue>
+                <allowedValue>SR </allowedValue>
+                <allowedValue>T</allowedValue>
+                <allowedValue>B</allowedValue>
+            </allowedValueList>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>A_ARG_TYPE_InstanceID</name>
+            <dataType>ui4</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>A_ARG_TYPE_PresetName</name>
+            <dataType>string</dataType>
+            <allowedValueList>
+                <allowedValue>FactoryDefaults</allowedValue>
+                <allowedValue>InstallationDefaults</allowedValue>
+            </allowedValueList>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>A_ARG_TYPE_DeviceUDN</name>
+            <dataType>string</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>A_ARG_TYPE_ServiceType</name>
+            <dataType>string</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>A_ARG_TYPE_ServiceID</name>
+            <dataType>string</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>A_ARG_TYPE_StateVariableValuePairs</name>
+            <dataType>string</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+        <stateVariable sendEvents="no">
+            <name>A_ARG_TYPE_StateVariableList</name>
+            <dataType>string</dataType>
+            <defaultValue></defaultValue>
+        </stateVariable>
+    </serviceStateTable>
+</scpd>
