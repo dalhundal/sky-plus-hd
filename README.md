@@ -20,10 +20,12 @@ findABox.then(function(box) {
 	console.log(box.model);
 	console.log(box.capacity);
 	console.log(box.software);
+	console.log(box.serialNumber);
 	/** Example output:
 		DRX890
 		500GB
 		R010.070.58.13P (4n1p6hh)
+		321654987
 	*/
 });
 
