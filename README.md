@@ -20,7 +20,7 @@ findABox.then(function(box) {
 	console.log(box.model);
 	console.log(box.capacity);
 	console.log(box.software);
-	console.log(box.serialNumber);
+	console.log(box.serial);
 	/** Example output:
 		DRX890
 		500GB
