@@ -6,8 +6,8 @@
         <minor>0</minor>
     </specVersion>
     <actionList>
-    <action>
-        <name>GetProtocolInfo</name>
+        <action>
+            <name>GetProtocolInfo</name>
             <argumentList>
                 <argument>
                     <name>Source</name>
@@ -20,9 +20,9 @@
                     <relatedStateVariable>SinkProtocolInfo</relatedStateVariable>
                 </argument>
             </argumentList>
-    </action>
-    <action>
-        <name>GetCurrentConnectionIDs</name>
+        </action>
+        <action>
+            <name>GetCurrentConnectionIDs</name>
             <argumentList>
                 <argument>
                     <name>ConnectionIDs</name>
@@ -30,9 +30,9 @@
                     <relatedStateVariable>CurrentConnectionIDs</relatedStateVariable>
                 </argument>
             </argumentList>
-    </action>
-    <action>
-        <name>GetCurrentConnectionInfo</name>
+        </action>
+        <action>
+            <name>GetCurrentConnectionInfo</name>
             <argumentList>
                 <argument>
                     <name>ConnectionID</name>

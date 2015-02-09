@@ -7,7 +7,7 @@
     </specVersion>
     <actionList>
         <action>
-        <name>ListPresets</name>
+            <name>ListPresets</name>
             <argumentList>
                 <argument>
                     <name>InstanceID</name>
@@ -22,7 +22,7 @@
             </argumentList>
         </action>
         <action>
-        <name>SelectPreset</name>
+            <name>SelectPreset</name>
             <argumentList>
                 <argument>
                     <name>InstanceID</name>

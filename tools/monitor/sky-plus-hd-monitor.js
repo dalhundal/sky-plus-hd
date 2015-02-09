@@ -1,6 +1,6 @@
 var SkyPlusHD = require('../..');
 
-var findABox = SkyPlusHD.findBox();
+var findABox = SkyPlusHD.findBox('192.168.0.2');
 
 findABox.then(function(box) {
 	console.log();
