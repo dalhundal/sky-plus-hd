@@ -34,5 +34,6 @@
     "SkyPlusHD"
   ],
   "author": "Dal Hundal",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {}
 }

@@ -1,22 +1,19 @@
-var util = require('util');
 var SkyPlusHD = require('../..');
 
-var skyFinder = new SkyPlusHD().find();
+var findABox = SkyPlusHD.findBox();
 
-skyFinder.then(function(skyBox) {
-   console.log("READY: "+skyBox.description);
-
-   /*
-   console.log("Reading planner...");
-   skyBox.planner.getPlannerItems().then(function(items) {
-      console.log('Planner contains '+items.length + ' items');
-   });
-   */
-   skyBox.on('stateChanged',function(playEvent) {
-      console.log(util.format(">>> State:[%s] URI:[%s] Speed:[%s]",playEvent.TransportState,playEvent.CurrentTrackURI,playEvent.TransportPlaySpeed));
-   });
+findABox.then(function(box) {
+	console.log();
+	console.log("Found a SkyPlusHD box!");
+	console.log("        IP:",box.ip);
+	console.log("     MODEL:",box.model);
+	console.log("  CAPACITY:",box.capacity);
+	console.log("  SOFTWARE:",box.software);
+	console.log("    SERIAL:",box.serial);
+	console.log("    PHOTOS:",box.supportsPhotoViewing ? 'Yes' : 'No');
+	console.log();
 });
 
-skyFinder.fail(function(err) {
-   console.log("Failed to find skybox, "+err);
+findABox.fail(function(err) {
+	console.log("Failed to find SkyPlusHD box",err);
 });
