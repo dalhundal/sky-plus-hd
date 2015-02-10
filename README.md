@@ -1,3 +1,5 @@
+[![Gitter chat](https://badges.gitter.im/dalhundal/sky-plus-hd.png)](https://gitter.im/dalhundal/sky-plus-hd)
+
 ## Features
 
 - Search for SkyPlusHD boxes on the local network
