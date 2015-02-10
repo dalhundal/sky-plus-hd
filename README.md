@@ -1,3 +1,19 @@
+## Features
+
+- Search for SkyPlusHD boxes on the local network
+- Control of SkyPlusHD boxes
+	- Play
+	- Pause
+	- Stop
+	- Fast forward / rewind at speeds of x2, x6, x12, x30
+- Listen for channel change events
+- Listen for playback events
+	- Playing
+	- Paused
+	- Stopped
+	- Fast forwarding
+	- Rewinding
+
 ## Geting Started
 
 ### To install...
