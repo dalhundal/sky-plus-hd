@@ -32,6 +32,19 @@ findABox.then(function(box){
 			spinner.done(false);
 		});
 	});
+
+	celeri.option({
+		command: 'channel :number',
+		description: "Changes to specified channel number",
+	},function(data) {
+		var spinner = celeri.loading("Changing to channel...");
+		box.setChannel(data.number).then(function() {
+			spinner.done(true);
+		}).fail(function() {
+			spinner.done(false);
+		});
+	});
+
 });
 
 findABox.then(function(box) {
