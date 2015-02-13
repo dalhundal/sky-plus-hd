@@ -45,6 +45,15 @@ findABox.then(function(box){
 		});
 	});
 
+	celeri.option({
+		command: 'planner',
+		description: 'Read the planner'
+	},function() {
+		box.readPlanner().then(function(progs) {
+			console.log(progs);
+		});
+	});
+
 });
 
 findABox.then(function(box) {
