@@ -2,7 +2,7 @@ var celeri = require('celeri');
 var util = require('util');
 var SkyPlusHD = require('../..');
 
-var findABox = SkyPlusHD.findBox();
+var findABox = SkyPlusHD.findBox('192.168.0.40');
 
 findABox.then(function(box){
 	celeri.open({
@@ -42,6 +42,17 @@ findABox.then(function(box){
 			spinner.done(true);
 		}).fail(function() {
 			spinner.done(false);
+		});
+	});
+
+	celeri.option({
+		command: 'channel?',
+		description: "Info about the current channel"
+	},function() {
+		box.whatsOn().then(function(channel) {
+			console.log("%s on channel %d", channel.nameLong, channel.number);
+		}).catch(function(err) {
+			console.log("NOTOK");
 		});
 	});
 
