@@ -50,7 +50,9 @@ findABox.then(function(box){
 		description: 'Read the planner'
 	},function() {
 		box.readPlanner().then(function(progs) {
-			console.log(progs);
+			console.log(_.map(progs,function(prog, i) {
+				return prog.title;
+			}));
 		});
 	});
 
