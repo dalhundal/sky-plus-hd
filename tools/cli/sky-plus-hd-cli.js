@@ -2,7 +2,7 @@ var celeri = require('celeri');
 var util = require('util');
 var SkyPlusHD = require('../..');
 
-var findABox = SkyPlusHD.findBox('192.168.0.40');
+var findABox = SkyPlusHD.findBox(process.argv[2] || undefined);
 
 findABox.then(function(box){
 	celeri.open({
