@@ -5,9 +5,11 @@
   "main": "lib/sky-plus-hd.js",
   "dependencies": {
     "celeri": "~0.3.3",
+    "cli-table": "^0.3.1",
     "freeport": "^1.0.4",
     "ip": "~0.2.0",
     "jsonfile": "^2.0.0",
+    "moment": "^2.9.0",
     "node-ssdp": "^2.0.1",
     "portfinder": "~0.2.1",
     "pretty-data": "~0.40.0",

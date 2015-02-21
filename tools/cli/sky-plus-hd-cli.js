@@ -1,6 +1,10 @@
 var celeri = require('celeri');
+var moment = require('moment');
+var Table = require('cli-table');
 var util = require('util');
+
 var SkyPlusHD = require('../..');
+var SkyPlusHDChannelList = require('../../lib/sky-plus-hd_channel-list');
 
 var findABox = SkyPlusHD.findBox(process.argv[2] || undefined);
 
@@ -33,6 +37,44 @@ findABox.then(function(box){
 		});
 	});
 
+
+	celeri.option({
+		command: 'stop',
+		description: "Stops playback",
+	},function() {
+		var spinner = celeri.loading("Stopping");
+		box.stop().then(function() {
+			spinner.done(true);
+		}).fail(function() {
+			spinner.done(false);
+		});
+	});
+
+	celeri.option({
+		command: 'rwd',
+		description: "Rewinds @ 12x",
+	},function() {
+		var spinner = celeri.loading("Rewinding");
+		box.play(-12).then(function() {
+			spinner.done(true);
+		}).fail(function() {
+			spinner.done(false);
+		});
+	});
+
+	celeri.option({
+		command: 'fwd',
+		description: "Forwards @ 12x",
+	},function() {
+		var spinner = celeri.loading("Forwarding");
+		box.play(12).then(function() {
+			spinner.done(true);
+		}).fail(function() {
+			spinner.done(false);
+		});
+	});
+
+
 	celeri.option({
 		command: 'channel :number',
 		description: "Changes to specified channel number",
@@ -40,8 +82,10 @@ findABox.then(function(box){
 		var spinner = celeri.loading("Changing to channel...");
 		box.setChannel(data.number).then(function() {
 			spinner.done(true);
-		}).fail(function() {
+			//
+		}).fail(function(err) {
 			spinner.done(false);
+			console.log(err);
 		});
 	});
 
@@ -52,9 +96,31 @@ findABox.then(function(box){
 		box.whatsOn().then(function(channel) {
 			console.log("%s on channel %d", channel.nameLong, channel.number);
 		}).catch(function(err) {
-			console.log("NOTOK");
+			console.log("NOTOK",err);
 		});
 	});
+
+	celeri.option({
+		command: 'tvguide :channelNumber',
+		description: 'Shows the schedule for specified channel number'
+	}, function(data) {
+		var spinner = celeri.loading("Retreiving schedule...");
+		var channelList = new SkyPlusHDChannelList();
+		channelList.init().then(function(x) {
+			var channel = channelList.findChannel({number:+data.channelNumber});
+			console.log(channel.name);
+			channel.getSchedule().then(function(schedule) {
+				var table = new Table({
+					head: ['Start','Title']
+				});
+				_.each(schedule,function(prog) {
+					table.push([moment(prog.start).format('HH:mm'), prog.title]);
+				});
+				console.log(table.toString());
+				spinner.done();
+			});
+		});
+	})
 
 	celeri.option({
 		command: 'planner',
