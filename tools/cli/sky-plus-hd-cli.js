@@ -126,12 +126,41 @@ findABox.then(function(box){
 		command: 'planner',
 		description: 'Read the planner'
 	},function() {
+		var spinner = celeri.loading("Reading the planner...");
 		box.readPlanner().then(function(progs) {
-			console.log(_.map(progs,function(prog, i) {
-				return prog.title;
-			}));
-		});
+			var table = new Table({
+					head: ['Index','Resource','Title']
+				});
+			_.each(progs,function(prog,i) {
+				table.push([i,prog.resource,prog.title]);
+			});
+			spinner.done();
+			console.log(table.toString());
+		}).done();
 	});
+
+	celeri.option({
+		command: 'uri :schemehex :id',
+		description: 'Specify a uri to play on the box'
+	},function(data) {
+		var spinner = celeri.loading("Setting URI to "+data.schemehex+"://"+data.id);
+		box.setURI(util.format("%s://%s", data.schemehex, data.id)).then(function() {
+			spinner.done();
+		}).catch(function() {
+			spinner.done(true);
+		})
+	});
+
+	celeri.option({
+		command: 'pvr :id',
+	},function(data) {
+		var spinner = celeri.loading("Playing pvr item "+util.format("file://pvr/%s", data.id));
+		box.setURI(util.format("file://pvr/%s", data.id)).then(function() {
+			spinner.done();
+		}).catch(function() {
+			spinner.done(true);
+		})
+	})
 
 });
 
