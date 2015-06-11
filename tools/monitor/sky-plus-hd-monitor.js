@@ -22,8 +22,8 @@ findABox.then(function(box) {
 	box.on('change:uri',function(val,oldVal) {
 		console.log("       URI:",val);
 	});
-	box.on('change',function(state) {
-		console.log("     STATE:",state);
+	box.on('change:uri_id',function(val,oldVal) {
+		console.log("    URI ID:",val);
 	});
 });
 
