@@ -12,6 +12,19 @@ findABox.then(function(box) {
 	console.log("    SERIAL:",box.serial);
 	console.log("    PHOTOS:",box.supportsPhotoViewing ? 'Yes' : 'No');
 	console.log();
+	/**/
+	box.on('change:playSpeed',function(val,oldVal) {
+		console.log(" PLAYSPEED:",val);
+	});
+	box.on('change:source',function(val,oldVal) {
+		console.log("    SOURCE:",val);
+	});
+	box.on('change:uri',function(val,oldVal) {
+		console.log("       URI:",val);
+	});
+	box.on('change',function(state) {
+		console.log("     STATE:",state);
+	});
 });
 
 findABox.fail(function(err) {
