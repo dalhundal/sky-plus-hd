@@ -4,6 +4,7 @@
   "description": "Node.js module for controlling and monitoring Sky+ HD set top boxes",
   "main": "lib/sky-plus-hd.js",
   "dependencies": {
+    "bluebird": "^2.9.27",
     "celeri": "~0.3.3",
     "cli-table": "^0.3.1",
     "freeport": "^1.0.4",
@@ -13,7 +14,6 @@
     "node-ssdp": "^2.2.1",
     "portfinder": "~0.2.1",
     "pretty-data": "~0.40.0",
-    "q": "~1.0.0",
     "request": "~2.33.0",
     "underscore": "~1.5.2",
     "underscore.string": "~2.3.3",

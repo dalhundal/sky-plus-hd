@@ -27,6 +27,6 @@ findABox.then(function(box) {
 	});
 });
 
-findABox.fail(function(err) {
+findABox.catch(function(err) {
 	console.log("Failed to find SkyPlusHD box",err);
 });

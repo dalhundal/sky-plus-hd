@@ -20,7 +20,7 @@ findABox.then(function(box){
 		var spinner = celeri.loading("Pausing");
 		box.pause().then(function() {
 			spinner.done(true);
-		}).fail(function() {
+		}).catch(function() {
 			spinner.done(true);
 		});
 	});
@@ -32,7 +32,7 @@ findABox.then(function(box){
 		var spinner = celeri.loading("Playing");
 		box.play().then(function() {
 			spinner.done(true);
-		}).fail(function() {
+		}).catch(function() {
 			spinner.done(false);
 		});
 	});
@@ -45,7 +45,7 @@ findABox.then(function(box){
 		var spinner = celeri.loading("Stopping");
 		box.stop().then(function() {
 			spinner.done(true);
-		}).fail(function() {
+		}).catch(function() {
 			spinner.done(false);
 		});
 	});
@@ -57,7 +57,7 @@ findABox.then(function(box){
 		var spinner = celeri.loading("Rewinding");
 		box.play(-12).then(function() {
 			spinner.done(true);
-		}).fail(function() {
+		}).catch(function() {
 			spinner.done(false);
 		});
 	});
@@ -69,7 +69,7 @@ findABox.then(function(box){
 		var spinner = celeri.loading("Forwarding");
 		box.play(12).then(function() {
 			spinner.done(true);
-		}).fail(function() {
+		}).catch(function() {
 			spinner.done(false);
 		});
 	});
@@ -83,7 +83,7 @@ findABox.then(function(box){
 		box.setChannel(data.number).then(function() {
 			spinner.done(true);
 			//
-		}).fail(function(err) {
+		}).catch(function(err) {
 			spinner.done(false);
 			console.log(err);
 		});
@@ -176,6 +176,6 @@ findABox.then(function(box) {
 	console.log();
 });
 
-findABox.fail(function(err) {
+findABox.catch(function(err) {
 	console.log("Failed to find SkyPlusHD box",err);
 });
