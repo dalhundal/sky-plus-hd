@@ -1,0 +1,242 @@
+{
+	"atherstone": {
+		"name": "Atherstone",
+		"hd": "4101-19",
+		"sd": "4097-19"
+	},
+	"border-england": {
+		"name": "Border England",
+		"hd": "4101-12",
+		"sd": "4097-12"
+	},
+	"border-scotland": {
+		"name": "Border Scotland",
+		"hd": "4102-36",
+		"sd": "4098-36"
+	},
+	"brighton": {
+		"name": "Brighton",
+		"hd": "4103-65",
+		"sd": "4099-65"
+	},
+	"central-midlands": {
+		"name": "Central Midlands",
+		"hd": "4101-3",
+		"sd": "4097-3"
+	},
+	"channel-isles": {
+		"name": "Channel Isles",
+		"hd": "4104-34",
+		"sd": "4100-34"
+	},
+	"dundee": {
+		"name": "Dundee",
+		"hd": "4102-39",
+		"sd": "4098-39"
+	},
+	"east-midlands": {
+		"name": "East Midlands",
+		"hd": "4101-20",
+		"sd": "4097-20"
+	},
+	"essex": {
+		"name": "Essex",
+		"hd": "4101-2",
+		"sd": "4097-2"
+	},
+	"gloucester": {
+		"name": "Gloucester",
+		"hd": "4101-24",
+		"sd": "4097-24"
+	},
+	"grampian": {
+		"name": "Grampian",
+		"hd": "4102-35",
+		"sd": "4098-35"
+	},
+	"granada": {
+		"name": "Granada",
+		"hd": "4101-7",
+		"sd": "4097-7"
+	},
+	"henley-on-thames": {
+		"name": "Henley On Thames",
+		"hd": "4103-70",
+		"sd": "4099-70"
+	},
+	"htv-wales": {
+		"name": "HTV Wales",
+		"hd": "4103-43",
+		"sd": "4099-43"
+	},
+	"htv-west": {
+		"name": "HTV West",
+		"hd": "4101-4",
+		"sd": "4097-4"
+	},
+	"htv-west-thames-valley": {
+		"name": "HTV West / Thames Valley",
+		"hd": "4103-63",
+		"sd": "4099-63"
+	},
+	"humber": {
+		"name": "Humber",
+		"hd": "4101-29",
+		"sd": "4097-29"
+	},
+	"london": {
+		"name": "London",
+		"hd": "4101-1",
+		"sd": "4097-1"
+	},
+	"london-essex": {
+		"name": "London / Essex",
+		"hd": "4101-18",
+		"sd": "4097-18"
+	},
+	"london-thames-valley": {
+		"name": "London / Thames Valley",
+		"hd": "4103-66",
+		"sd": "4099-66"
+	},
+	"london-kent": {
+		"name": "London Kent",
+		"hd": "4103-64",
+		"sd": "4099-64"
+	},
+	"meridian-east": {
+		"name": "Meridian East",
+		"hd": "4101-11",
+		"sd": "4097-11"
+	},
+	"meridian-north": {
+		"name": "Meridian North",
+		"hd": "4103-68",
+		"sd": "4099-68"
+	},
+	"meridian-south": {
+		"name": "Meridian South",
+		"hd": "4101-5",
+		"sd": "4097-5"
+	},
+	"meridian-south-east": {
+		"name": "Meridian South East",
+		"hd": "4101-10",
+		"sd": "4097-10"
+	},
+	"merseyside": {
+		"name": "Merseyside",
+		"hd": "4103-45",
+		"sd": "4099-45"
+	},
+	"norfolk": {
+		"name": "Norfolk",
+		"hd": "4101-21",
+		"sd": "4097-21"
+	},
+	"north-east-midlands": {
+		"name": "North East Midlands",
+		"hd": "4103-62",
+		"sd": "4099-62"
+	},
+	"north-west-yorkshire": {
+		"name": "North West Yorkshire",
+		"hd": "4101-8",
+		"sd": "4097-8"
+	},
+	"north-yorkshire": {
+		"name": "North Yorkshire",
+		"hd": "4101-26",
+		"sd": "4097-26"
+	},
+	"northern-ireland": {
+		"name": "Northern Ireland",
+		"hd": "4104-33",
+		"sd": "4100-33"
+	},
+	"oxford": {
+		"name": "Oxford",
+		"hd": "4103-71",
+		"sd": "4099-71"
+	},
+	"republic-of-ireland": {
+		"name": "Republic of Ireland",
+		"hd": "4104-50",
+		"sd": "4100-50"
+	},
+	"ridge-hill": {
+		"name": "Ridge Hill",
+		"hd": "4103-41",
+		"sd": "4099-41"
+	},
+	"scarborough": {
+		"name": "Scarborough",
+		"hd": "4103-61",
+		"sd": "4099-61"
+	},
+	"scottish-east": {
+		"name": "Scottish East",
+		"hd": "4102-38",
+		"sd": "4098-38"
+	},
+	"scottish-west": {
+		"name": "Scottish West",
+		"hd": "4102-37",
+		"sd": "4098-37"
+	},
+	"sheffield": {
+		"name": "Sheffield",
+		"hd": "4103-60",
+		"sd": "4099-60"
+	},
+	"south-lakeland": {
+		"name": "South Lakeland",
+		"hd": "4101-28",
+		"sd": "4097-28"
+	},
+	"south-yorkshire": {
+		"name": "South Yorkshire",
+		"hd": "4103-72",
+		"sd": "4099-72"
+	},
+	"tees": {
+		"name": "Tees",
+		"hd": "4103-69",
+		"sd": "4099-69"
+	},
+	"thames-valley": {
+		"name": "Thames Valley",
+		"hd": "4101-9",
+		"sd": "4097-9"
+	},
+	"tring": {
+		"name": "Tring",
+		"hd": "4101-27",
+		"sd": "4097-27"
+	},
+	"tyne": {
+		"name": "Tyne",
+		"hd": "4101-13",
+		"sd": "4097-13"
+	},
+	"wales": {
+		"name": "Wales",
+		"hd": "4104-32",
+		"sd": "4100-32"
+	},
+	"west-anglia": {
+		"name": "West Anglia",
+		"hd": "4101-25",
+		"sd": "4097-25"
+	},
+	"west-dorset": {
+		"name": "West Dorset",
+		"hd": "4103-67",
+		"sd": "4099-67"
+	},
+	"westcountry": {
+		"name": "Westcountry",
+		"hd": "4101-6",
+		"sd": "4097-6"
+	}
+}

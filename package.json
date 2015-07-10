@@ -1,20 +1,24 @@
 {
   "name": "sky-plus-hd",
-  "version": "0.1.1",
+  "version": "1.0.0-dev",
   "description": "Node.js module for controlling and monitoring Sky+ HD set top boxes",
   "main": "lib/sky-plus-hd.js",
   "dependencies": {
+    "bluebird": "^2.9.27",
+    "celeri": "~0.3.3",
+    "cli-table": "^0.3.1",
+    "freeport": "^1.0.4",
     "ip": "~0.2.0",
-    "pretty-data": "~0.40.0",
-    "xml": "0.0.12",
-    "underscore": "~1.5.2",
-    "q": "~1.0.0",
+    "jsonfile": "^2.0.0",
+    "moment": "^2.9.0",
+    "node-ssdp": "^2.2.1",
     "portfinder": "~0.2.1",
-    "underscore.string": "~2.3.3",
-    "xml2js": "~0.4.1",
-    "node-ssdp": "~0.2.0",
+    "pretty-data": "~0.40.0",
     "request": "~2.33.0",
-    "celeri": "~0.3.3"
+    "underscore": "~1.5.2",
+    "underscore.string": "~2.3.3",
+    "xml": "0.0.12",
+    "xml2js": "~0.4.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -32,5 +36,6 @@
     "SkyPlusHD"
   ],
   "author": "Dal Hundal",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {}
 }

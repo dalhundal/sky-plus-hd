@@ -1,0 +1,199 @@
+* {
+	box-sizing: border-box;
+}
+
+scpd {
+	font-family: Helvetica, Verdana, Arial, Sans Serif;
+	color: #333;
+	background-color: #FAFAFA;
+}
+
+specVersion {
+	display: none;
+}
+
+actionList {
+	display: block;
+}
+actionList:before {
+	content: 'Actions';
+	display: block;
+	font-weight: bold;
+	font-size: 2rem;
+	margin-bottom: 1rem;
+	padding: 1rem;
+	background-color: black;
+	color: white;
+}
+
+action, stateVariable {
+	display: block;
+	margin: 1rem;
+	padding: 1rem;
+}
+action + action, stateVariable + stateVariable {
+	border-top: 1px solid #DDD;
+}
+action > name, stateVariable > name {
+	font-size: 1.2rem;
+	font-weight: bold;
+	display: block;
+}
+action > argumentList {
+	display: block;
+	margin-top: 1rem;
+	margin-left: 1rem;
+}
+action > argumentList > argument {
+	display: block;
+	padding: 0.5rem;
+	transition: background-color 0.2s;
+}
+action > argumentList > argument:hover {
+	background-color: #EEE;
+}
+action > argumentList > argument + argument {
+	border-top: 1px solid #EEE;
+}
+action > argumentList > argument > name {
+	padding-left: 10px;
+	width: 25%;
+	display: inline-block;
+}
+action > argumentList > argument > direction {
+	width: 50px;
+	display: inline-block;
+	text-transform: uppercase;
+	text-align: center;
+	color: #999;
+	font-size: 0.75rem;
+	border: 1px solid #DDD;
+	border-radius: 4px;
+	float: left;
+}
+action > argumentList > argument > relatedStateVariable {
+	text-align: right;
+	display: inline-block;
+	width: calc(100% - 50px - 10px - 25%);
+	font-size: 0.8rem;
+	color: #999;
+}
+
+serviceStateTable {
+	display: block;
+}
+
+serviceStateTable:before {
+	content: "Types";
+	display: block;
+	font-weight: bold;
+	font-size: 2rem;
+	margin-bottom: 1rem;
+	padding: 1rem;
+	background-color: black;
+	color: white;
+}
+
+stateVariable > dataType {
+	display: block;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	color: #999;
+}
+
+stateVariable > allowedValueList, stateVariable > allowedValueRange {
+	max-height: 150px;
+	overflow: auto;
+	display: block;
+	border: 1px solid #DDD;
+	background-color: #EEE;
+	padding-bottom: 0.5rem;
+	margin-top: 1rem;
+}
+
+stateVariable > allowedValueList:before {
+	display: block;
+	content: "Allowed Values";
+	background-color: #999;
+	color: white;
+	padding: 0.5rem;
+	font-size: 0.75rem;
+	margin-bottom: 0.5rem;
+}
+
+stateVariable > allowedValueRange:before {
+	display: block;
+	content: "Allowed Value Range";
+	background-color: #999;
+	color: white;
+	padding: 0.5rem;
+	font-size: 0.75rem;
+	margin-bottom: 0.5rem;
+}
+
+stateVariable > allowedValueRange > * {
+	display: block;
+	font-size: 0.8rem;
+	margin: 0 0.5rem;
+}
+
+stateVariable > allowedValueRange > * + * {
+	border-top: 1px solid #DDD;
+	margin-top: 0.3rem;
+}
+
+stateVariable > allowedValueRange > minimum:before {
+	content: "MIN: ";
+	display: inline-block;
+	width: 50px;
+	text-align: right;
+	color: #999;
+}
+
+stateVariable > allowedValueRange > maximum:before {
+	content: "MAX: ";
+	display: inline-block;
+	width: 50px;
+	text-align: right;
+	color: #999;
+}
+
+stateVariable > allowedValueRange > step:before {
+	content: "STEP: ";
+	display: inline-block;
+	width: 50px;
+	text-align: right;
+	color: #999;
+}
+
+stateVariable > allowedValueList > allowedValue {
+	display: block;
+	font-size: 0.8rem;
+	margin: 0 0.5rem;
+}
+stateVariable > allowedValueList > allowedValue + allowedValue {
+	border-top: 1px solid #DDD;
+	margin-top: 0.3rem;
+}
+
+stateVariable > defaultValue:before {
+	display: block;
+	content: "Default Value";
+	background-color: #999;
+	color: white;
+	padding: 0.5rem;
+	font-size: 0.75rem;
+	margin: -0.5rem;
+	margin-bottom: 0.5rem;
+}
+stateVariable > defaultValue {
+	display: block;
+	font-size: 0.8rem;
+	border: 1px solid #DDD;
+	background-color: #EEE;
+	padding: 0.5rem;
+	margin-top: 1rem;
+}
+stateVariable > defaultValue:empty {
+	display: none;
+}
