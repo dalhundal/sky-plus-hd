@@ -11,6 +11,10 @@ Check out the v1-dev branch.
 
 For simpler control (just sending remote control commands) see https://github.com/dalhundal/sky-remote
 
-Contact:
+Contact
+=======
+
 twitter @ringspun
-gitter chat:  https://gitter.im/dalhundal/sky-plus-hd
+
+
+gitter chat  https://gitter.im/dalhundal/sky-plus-hd
